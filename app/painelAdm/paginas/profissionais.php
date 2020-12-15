@@ -34,18 +34,12 @@ $dados = $resultdados->consultarBanco('SELECT * FROM profissionais');
 
 
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title far icon-calendar_today">
-                                04 de Dezembro
-                            </h3>
-                        
-                          
-                        </div>
+
 
 
                         <!-- /.card-header -->
                         <div class="card-body">
-  <a href="cpanel.php?pg=cadastrodemedicos" class="btn btn-success">Cadastrar</a>
+                            <a href="cpanel.php?pg=cadastrodemedicos" class="btn btn-success">Cadastrar Profissional</a>
 
 
 
@@ -57,13 +51,12 @@ $dados = $resultdados->consultarBanco('SELECT * FROM profissionais');
 
                                 <thead>
                                     <tr class="text-center">
-                                        <th>id</th>
                                         <th>Nome</th>
                                         <th>RG</th>
                                         <th>CPF</th>
-                                        <th>especialidade</th>
+                                        <th>Especialidade</th>
 
-                                        <th>Açoes</th>
+                                        <th>Opções</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,7 +64,6 @@ $dados = $resultdados->consultarBanco('SELECT * FROM profissionais');
                                     ?>
 
                                         <tr class="text-center">
-                                            <td><?php echo $dadosusuario["id_profi"]  ?></td>
                                             <td><?php echo $dadosusuario["nomemedico"]  ?></td>
                                             <td><?php echo $dadosusuario["rg"]  ?></td>
                                             <td><?php echo $dadosusuario["cpf"]  ?></td>

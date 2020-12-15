@@ -1,18 +1,24 @@
 /* Meu Css */
 
 body{
-  background-color: cornflowerblue;
+  background-color: cornflowerblue; 
 }
 
 .icon-event_note{
 font-size: 80px;
 }
 
+
+
 #navega{
-background-color: #ffffff;
+background-color: #AFE0FF;
 
 }
 
+@font-face{
+  font-family: "san";
+  src: url(../fonts/Sanchezregular.otf);
+}
 
 
 #textos{
@@ -31,7 +37,7 @@ justify-content: right;
 }
 
 #agenda2{
-background-color: #5999d4;
+background-color:#AFE0FF;
 }
 /* Cor do footer */
 
@@ -213,5 +219,65 @@ background-color:#ea4c89
 
 bottom: -15px;
 }
+
+
+#botaoesq{
+  position: absolute;
+  left: -110px;
+}
+
+.icon-arrow-left{
+  color: orange;
+  font-size: 30px;
+}
+.icon-arrow-right{
+  color: orange;
+  font-size: 30px;
+}
+
+#botaodirei{
+
+  position: absolute;
+  right: -112px;
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
+.senac{
+  color:#007BFF;
+}
+
+#aaa{
+  font-size: 13px;
+}
+
+#linha{
+  background-color: whitesmoke;
+}
+
+#tamanho{
+
+ position: absolute;
+  top: -450px;
+  left: 220px;
+}
+
+#sla{
+
+  position: absolute;
+   top: -200px;
+   left: 90px;
+   font-size: 35px;
+   color: rgb(0, 0, 0);
+ }
+
+ .contato{
+   border: peru solid 1px; 
+ }
+
 
 

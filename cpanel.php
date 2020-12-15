@@ -1,38 +1,47 @@
 <?php
 include_once "app/painelAdm/helpers/helperAdm.php";
 
+$pg = "cpanel";
 
 
+session_start();
+if (isset($_GET["pg"])) {
+    $pg = $_GET["pg"];
+}
+
+if (isset($_SESSION['usuario'])) {
+    switch ($pg) {
 
 
-
-
-
-$cpanel = isset($_GET["pg"]);
-
-
-
-
-if ($cpanel) {
-
-    switch ($_GET["pg"]) {
-
-
-
+        case 'cpanel':
+            include_once "app/painelAdm/paginas/includes/header.php";
+            include_once "app/painelAdm/paginas/includes/navegacao.php";
+            include_once "app/painelAdm/paginas/inicial.php";
+            include_once "app/painelAdm/paginas/includes/footer.php";
+            break;
 
         case 'login':
-            include_once "app/site/paginas/login.php";
+            include_once "app/painelAdm/paginas/includes/header.php";
+            include_once "app/painelAdm/paginas/includes/navegacao.php";
+            include_once "app/painelAdm/paginas/inicial.php";
+            include_once "app/painelAdm/paginas/includes/footer.php";
             break;
 
         case 'agenda':
             include_once "app/painelAdm/paginas/includes/header.php";
             include_once "app/painelAdm/paginas/includes/navegacao.php";
             include_once "app/painelAdm/paginas/agenda.php";
-
             // include_once "app/painelAdm/paginas/includes/footer.php";
-
-
             break;
+
+        case 'solicitaçaocontato':
+            include_once "app/painelAdm/paginas/includes/header.php";
+            include_once "app/painelAdm/paginas/includes/navegacao.php";
+            include_once "app/painelAdm/paginas/solicitaçaocontato.php";
+
+            include_once "app/painelAdm/paginas/includes/footer.php";
+            break;
+
 
         case 'cadastrodemedicos':
             include_once "app/painelAdm/paginas/includes/header.php";
@@ -84,6 +93,16 @@ if ($cpanel) {
             header('location: ?pg=profissionais');
             break;
 
+        case 'apagarconsulta':
+            $parametros = array(
+                ':id_eventos' => $_GET['id']
+            );
+            $apagarprofissionais = new Conexao();
+            $apagarprofissionais->intervencaoNoBanco('DELETE FROM eventos WHERE id_eventos = :id_eventos', $parametros);
+            header('location: ?pg=marcaçoes');
+            break;
+
+
         case 'apagarpacientes':
             $parametros = array(
                 ':id_paciente' => $_GET['id']
@@ -91,6 +110,15 @@ if ($cpanel) {
             $apagarpacientes = new Conexao();
             $apagarpacientes->intervencaoNoBanco('DELETE FROM pacientes WHERE id_paciente = :id_paciente', $parametros);
             header('location: ?pg=pacientes');
+            break;
+
+        case 'apagarcontato':
+            $parametros = array(
+                ':id_contato' => $_GET['id']
+            );
+            $apagarpacientes = new Conexao();
+            $apagarpacientes->intervencaoNoBanco('DELETE FROM contato WHERE id_contato = :id_contato', $parametros);
+            header('location: ?pg=solicitaçaocontato');
             break;
 
         case 'cadastrodeespecialidades':
@@ -114,11 +142,11 @@ if ($cpanel) {
                 //$editarpacientes = isset($_GET['id']);
                 //if ($editarpacientes) {
 
-                    //$dadosusuario = atualizarpacientes($editarpacientes);
-                    include_once "app/painelAdm/paginas/editarpacientes.php";
-            //} else {
-                  
-             // }
+                //$dadosusuario = atualizarpacientes($editarpacientes);
+                include_once "app/painelAdm/paginas/editarpacientes.php";
+                //} else {
+
+                // }
             };
             include_once "app/painelAdm/paginas/includes/footer.php";
             break;
@@ -134,11 +162,11 @@ if ($cpanel) {
                 //$editarpacientes = isset($_GET['id']);
                 //if ($editarpacientes) {
 
-                    //$dadosusuario = atualizarpacientes($editarpacientes);
-                    include_once "app/painelAdm/paginas/editarprofissionais.php";
-            //} else {
-                  
-             // }
+                //$dadosusuario = atualizarpacientes($editarpacientes);
+                include_once "app/painelAdm/paginas/editarprofissionais.php";
+                //} else {
+
+                // }
             };
             include_once "app/painelAdm/paginas/includes/footer.php";
             break;
@@ -148,8 +176,8 @@ if ($cpanel) {
 
         case 'sair';
             session_destroy();
-            header('location' . $_SERVER['PHP_SELF']);
-            header('Refresh:0');
+            header('Location: ' . $_SERVER['PHP_SELF']);
+            //header('Refresh: 0');
             break;
 
 
@@ -157,20 +185,59 @@ if ($cpanel) {
             include_once "app/painelAdm/paginas/includes/header.php";
             include_once "app/painelAdm/paginas/includes/navegacao.php";
             include_once "app/painelAdm/paginas/planodesaude.php";
-
             include_once "app/painelAdm/paginas/includes/footer.php";
 
 
             break;
+        case 'marcarconsultaagenda':
+            include_once "app/painelAdm/paginas/includes/header.php";
+            include_once "app/painelAdm/paginas/includes/navegacao.php";
+            include_once "app/painelAdm/paginas/marcarconsultaagenda.php";
+            include_once "app/painelAdm/paginas/includes/footer.php";
+            break;
+
+
+
+        case 'eventos':
+
+            // inserirconsulta();
+            include_once "app/painelAdm/calendario/cadastrar_evento.php";
+
+            break;
+
+        case 'contatovisu':
+            include_once "app/painelAdm/paginas/includes/header.php";
+            include_once "app/painelAdm/paginas/includes/navegacao.php";
+            include_once "app/painelAdm/paginas/visualizarcontato.php";
+            include_once "app/painelAdm/paginas/includes/footer.php";
+            break;
+
+        case 'marcaçoes':
+            include_once "app/painelAdm/paginas/includes/header.php";
+            include_once "app/painelAdm/paginas/includes/navegacao.php";
+            include_once "app/painelAdm/paginas/marcaçoes.php";
+            include_once "app/painelAdm/paginas/includes/footer.php";
+            break;
 
         default:
-
+            include_once "app/painelAdm/paginas/includes/header.php";
+            include_once "app/painelAdm/paginas/includes/navegacao.php";
+            include_once "app/painelAdm/paginas/inicial.php";
+            include_once "app/painelAdm/paginas/includes/footer.php";
             break;
     }
 } else {
-    include_once "app/painelAdm/paginas/includes/header.php";
-    include_once "app/painelAdm/paginas/includes/navegacao.php";
-    include_once "app/painelAdm/paginas/inicial.php";
+    $erro;
+    //verifica se foi submetido metodo post
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    include_once "app/painelAdm/paginas/includes/footer.php";
+        if (verificaSeLogado()) {
+            include_once "app/painelAdm/paginas/includes/header.php";
+            include_once "app/painelAdm/paginas/includes/navegacao.php";
+            include_once "app/painelAdm/paginas/inicial.php";
+            include_once "app/painelAdm/paginas/includes/footer.php";
+        }
+    } else {
+        include_once "app/site/paginas/login.php";
+    }
 }

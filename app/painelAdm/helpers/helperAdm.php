@@ -22,7 +22,7 @@ function consultaSQL($tabela, $idtabela = null, $id_valor = null)
 function verificaSeLogado()
 {
 
-    $usuario = trim($_POST['usuario']);
+    $usuario = trim($_POST['nome']);
     $senha = trim($_POST['senha']);
 
 
@@ -32,28 +32,29 @@ function verificaSeLogado()
         ':usuario' => $usuario
     );
 
-    $resultadoConsulta = $resultConexao->consultarBanco('SELECT * FROM usuarios WHERE nome = :usuario', $parametros);
+    $resultadoConsulta = $resultConexao->consultarBanco('SELECT * FROM recepcionistas WHERE nome = :usuario', $parametros);
 
     if (count($resultadoConsulta) > 0) {
         $senha_bd = $resultadoConsulta[0]['senha'];
 
         if (password_verify($senha, $senha_bd)) {
             $_SESSION['usuario'] = $usuario;
-            $_SESSION['img_usuario'] = $resultadoConsulta[0]['img'];
+
             return true;
         } else {
             $erro = 'Usuário e/ou senha inválidos';
 
             //incluir a pagina de login aqui:
-            include_once "app/painelAdm/paginas/login.php";
+            include_once "app/site/paginas/login.php";
         }
     } else {
         $erro = 'Usuário e/ou senha inválidos';
 
         //incluir a pagina de login aqui:
-        include_once "app/painelAdm/paginas/login.php";
+        include_once "app/site/paginas/login.php";
     }
 }
+
 
 function inserirprofi()
 {
@@ -99,7 +100,7 @@ function inserirpaciente()
         $nome = trim($_POST['nome']);
         $rg = trim($_POST['rg']);
         $cpf = trim($_POST['cpf']);
-        $medico = trim($_POST['medico']);
+
         $data1 = trim($_POST['data1']);
 
         //Validar as variáveis e encriptar a senha
@@ -108,14 +109,13 @@ function inserirpaciente()
             ':nome' => $nome,
             ':rg' => $rg,
             ':cpf' => $cpf,
-            ':medico' => $medico,
             ':data1' => $data1
 
         );
 
         $resultDados = new Conexao();
-        $resultDados->intervencaoNoBanco('INSERT INTO pacientes(nome, rg, cpf,medico,data1) 
-    VALUES (:nome, :rg, :cpf,:medico,:data1)', $parametros);
+        $resultDados->intervencaoNoBanco('INSERT INTO pacientes(nome, rg, cpf,data1) 
+    VALUES (:nome, :rg, :cpf,:data1)', $parametros);
 
         //incluir a pagina que será exibida após cadastrar um usuario aqui:
 
@@ -125,7 +125,7 @@ function inserirpaciente()
         // header("Location: ?pg=profissionais");
     }
 }
-
+// 
 function inserirespecialidade()
 {
 
@@ -141,6 +141,7 @@ function inserirespecialidade()
 
         );
 
+
         $resultDados = new Conexao();
         $resultDados->intervencaoNoBanco('INSERT INTO especialidades(especialidade) 
     VALUES (:especialidade)', $parametros);
@@ -150,6 +151,67 @@ function inserirespecialidade()
         include_once "app/painelAdm/paginas/cadastrodeespecialidades.php";
     } else {
         include_once "app/painelAdm/paginas/cadastrodeespecialidades.php";
+        // header("Location: ?pg=profissionais");
+    }
+}
+function inserirrecepcionista()
+{
+
+    if ($_POST) {
+
+        //Pegando as variáveis via post
+        $nome = trim($_POST['nome']);
+        $senha = trim($_POST['senha']);
+
+        //Validar as variáveis e encriptar a senha
+        $parametros = array(
+
+            ':nome' => $nome,
+            ':senha' => password_hash($senha, PASSWORD_DEFAULT)
+
+        );
+
+        $resultDados = new Conexao();
+        $resultDados->intervencaoNoBanco('INSERT INTO recepcionistas(nome,senha) 
+    VALUES (:nome,:senha)', $parametros);
+
+        //incluir a pagina que será exibida após cadastrar um usuario aqui:
+        header("Location: cpanel.php?pg=login");
+        //include_once "app/site/paginas/login.php";
+    } else {
+        include_once "app/site/paginas/login.php";
+        // 
+    }
+}
+
+function cadastrodemensagem()
+{
+
+    if ($_POST) {
+
+        //Pegando as variáveis via post
+        $nome = trim($_POST['nome']);
+        $email = trim($_POST['email']);
+        $mensagem = trim($_POST['mensagem']);
+
+        //Validar as variáveis e encriptar a senha
+        $parametros = array(
+
+            ':nome' => $nome,
+            ':email' => $email,
+            ':mensagem' => $mensagem
+
+        );
+
+        $resultDados = new Conexao();
+        $resultDados->intervencaoNoBanco('INSERT INTO contato(nome,email,mensagem) 
+    VALUES (:nome,:email,:mensagem)', $parametros);
+
+        //incluir a pagina que será exibida após cadastrar um usuario aqui:
+
+        include_once "app/site/paginas/contato.php";
+    } else {
+        include_once "app/site/paginas/contato.php";
         // header("Location: ?pg=profissionais");
     }
 }
@@ -190,7 +252,7 @@ function atualizarpacientes()
     $nome = trim($_POST['nome']);
     $rg = trim($_POST['rg']);
     $cpf = trim($_POST['cpf']);
-    $medico = trim($_POST['medico']);
+
 
 
     //validando as variaveis
@@ -199,13 +261,13 @@ function atualizarpacientes()
         ':nome' => $nome,
         ':rg' => $rg,
         ':cpf' => $cpf,
-        ':medico' => $medico
+
 
     );
 
     //atualizando no banco
     $atualizaUsuario = new Conexao();
-    $atualizaUsuario->intervencaoNoBanco('UPDATE pacientes SET nome = :nome, rg = :rg, cpf = :cpf,medico = :medico   WHERE id_paciente = :id_paciente', $parametros);
+    $atualizaUsuario->intervencaoNoBanco('UPDATE pacientes SET nome = :nome, rg = :rg, cpf = :cpf   WHERE id_paciente = :id_paciente', $parametros);
 
     //incluir a pagina que será exibida quando um usuario for atualizado aqui:
     include_once "app/painelAdm/paginas/pacientes.php";

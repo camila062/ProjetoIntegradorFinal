@@ -1,6 +1,6 @@
 <?php $resultdados = new Conexao();
 
-$dados = $resultdados->consultarBanco('SELECT * FROM pacientes');
+$dados = $resultdados->consultarBanco('SELECT * FROM eventos');
 
 ?>
 
@@ -13,7 +13,8 @@ $dados = $resultdados->consultarBanco('SELECT * FROM pacientes');
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Pacientes</h1>
+                    <h1 class="m-0">Consultas Marcadas</h1>
+
                     <h1 class="m-0"></h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
@@ -42,19 +43,16 @@ $dados = $resultdados->consultarBanco('SELECT * FROM pacientes');
 
 
                             <table id="example1" class="table table-bordered table-striped">
-                                <a href="cpanel.php?pg=marcarconsulta" class="btn btn-success">Cadastrar Paciente</a>
+                                <a href="cpanel.php?pg=pacientes" class="btn btn-success">Pacientes</a>
+
 
                                 <thead>
                                     <tr class="text-center">
 
                                         <th>Paciente</th>
-                                        <th>RG</th>
-                                        <th>CPF</th>
+                                        <th>Médico</th>
                                         <th>Data</th>
-                                        <th>Recepcionista</th>
-                                        <th>Prontuário</th>
-                                        <th>Marcar Consulta</th>
-
+                                       
 
 
 
@@ -68,26 +66,14 @@ $dados = $resultdados->consultarBanco('SELECT * FROM pacientes');
                                     <?php foreach ($dados as $dadosusuarios) {  ?>
                                         <tr class="text-center">
 
-                                            <td><?php echo $dadosusuarios["nome"]  ?></td>
-                                            <td><?php echo $dadosusuarios["rg"]  ?></td>
-                                            <td><?php echo $dadosusuarios["cpf"]  ?></td>
-                                            <td><?php echo $dadosusuarios["dataAtualizacao"]  ?></td>
+                                            <td><?php echo $dadosusuarios["title"]  ?></td>
+                                            <td><?php echo $dadosusuarios["medico"]  ?></td>
+                                            <td><?php echo $dadosusuarios["start"]  ?></td>
+                                          
 
-                                            <td>Jenny</th>
-                                            <td> <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
-                                                    Prontuário
-                                                </button>
-                                            </td>
-
-
-
+                                            
                                             <td>
-                                                <a class="btn btn-outline-info" href="?pg=marcarconsultaagenda&id=<?php echo $dadosusuarios['id_paciente'] ?>">Marcar consulta</a>
-
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-outline-warning icon-pencil" href="?pg=editarpacientes&id=<?php echo $dadosusuarios['id_paciente'] ?>"></a>
-                                                <a class="btn btn-outline-danger icon-delete_sweep" href="?pg=apagarpacientes&id=<?php echo $dadosusuarios['id_paciente'] ?>"></a>
+                                                <a class="btn btn-outline-danger icon-delete_sweep" href="?pg=apagarconsulta&id=<?php echo $dadosusuarios['id_eventos'] ?>"></a>
                                             </td>
 
 
@@ -117,25 +103,10 @@ $dados = $resultdados->consultarBanco('SELECT * FROM pacientes');
                                             <div class="row">
                                                 <div class="col-4 text-center"><img src="app/assets/img/iconfinder_8_5027891.png" alt=""></div>
                                                 <div class="col-7">
-                                                    <h4>Clínica Escola Senac</h4>-Josivan da Silva <br>-Clínico Geral <br>-17/12/2020
+                                                    <h4>Clinica Escola Senac</h4>-Luiz Fernando Menezes <br>-Clinico Geral <br>-11/12/2020
                                                 </div>
                                                 ------------------------------------------------------------------------------------------------
-                                                <div class="text-rigth">Número do prontuário:8745524554
-                                                    <br> Data de abertura:17/12/2020
-                                                    <br>Nome completo: Reginaldo Silva Leite
-                                                    <br>Data de nascimento:25/03/1985
-                                                    <br>Gênero:Masculino
-                                                    <br>Endereço: Avenida Prefeito Severino Cunha Primo, 30 - Jardim Paulista, Paulista - PE, 53407-000
-                                                    <br>Telefone(s):(81) 3372-8250
-                                                    <br>Escolaridade: Ensino Superior
-                                                    <br>Ocupação:Professor
-                                                    <br>Limitação: [ ] Cognitiva [ ] Locomoção [ ] Visão [ ] Audição [X] Outras:
-                                                    <br>Alergia: Casca de amendoim <br>
-            
-                                                    <br>Médico(s) do paciente: Josivan da Silva
-                                                    <br>Data:17/12/2020
-                                                    <br>Avaliação: Paciente Reginaldo Silva Leite deu entrada na clinica as 13:32 no dia 17/12/2020 com vermelhidão e inchaço na pele, o paciente informol que tinha alergia a casca do emendoim, com o resultado dos exames foi adiministrado corticoides(Prednisona) de alegia.
-                                                </div>
+                                                <div class="text-rigth"> Lorem ipsum dolor sit amet consectetur adipisicing elit. A quidem deleniti accusamus quisquam tempora molestias dolore aspernatur exercitationem quae, nihil minus ullam expedita, at dolor voluptatum soluta rem et quod.</div>
 
 
 
